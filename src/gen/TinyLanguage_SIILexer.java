@@ -1,4 +1,4 @@
-// Generated from C:/Users/ASUS VIVOBOOK S14/IdeaProjects/TinyLanguage_SII/src\TinyLanguage_SII.g4 by ANTLR 4.9.1
+// Generated from C:/Users/acer/Desktop/TinyLanguage_SII_compilation/src\TinyLanguage_SII.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

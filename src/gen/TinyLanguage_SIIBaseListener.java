@@ -1,4 +1,4 @@
-// Generated from C:/Users/ASUS VIVOBOOK S14/IdeaProjects/TinyLanguage_SII/src\TinyLanguage_SII.g4 by ANTLR 4.9.1
+// Generated from C:/Users/acer/Desktop/TinyLanguage_SII_compilation/src\TinyLanguage_SII.g4 by ANTLR 4.9.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -214,6 +214,18 @@ public class TinyLanguage_SIIBaseListener implements TinyLanguage_SIIListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOp(TinyLanguage_SIIParser.OpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInstwhile(TinyLanguage_SIIParser.InstwhileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInstwhile(TinyLanguage_SIIParser.InstwhileContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

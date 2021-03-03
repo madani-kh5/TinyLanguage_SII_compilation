@@ -1,4 +1,4 @@
-// Generated from C:/Users/ASUS VIVOBOOK S14/IdeaProjects/TinyLanguage_SII/src\TinyLanguage_SII.g4 by ANTLR 4.9.1
+// Generated from C:/Users/acer/Desktop/TinyLanguage_SII_compilation/src\TinyLanguage_SII.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -176,6 +176,16 @@ public interface TinyLanguage_SIIListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOp(TinyLanguage_SIIParser.OpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyLanguage_SIIParser#instwhile}.
+	 * @param ctx the parse tree
+	 */
+	void enterInstwhile(TinyLanguage_SIIParser.InstwhileContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyLanguage_SIIParser#instwhile}.
+	 * @param ctx the parse tree
+	 */
+	void exitInstwhile(TinyLanguage_SIIParser.InstwhileContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TinyLanguage_SIIParser#scan}.
 	 * @param ctx the parse tree

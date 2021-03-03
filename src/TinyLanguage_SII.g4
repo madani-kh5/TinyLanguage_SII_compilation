@@ -1,7 +1,7 @@
 grammar TinyLanguage_SII;
 
 
-start_rule : 'compil' IDPROGRAMME '(' ')' '{'
+start_rule : COMPIL IDPROGRAMME '(' ')' '{'
 declarations
 START
 instructions
@@ -15,7 +15,7 @@ variables :  ((ID ',' variables) | ID) ;
 
 //instructions
 instructions : (instruction ';' instructions) | instruction ';' ;
-instruction : affectation | instif | scan | print;
+instruction : affectation | instif | instwhile | scan | print;
 
 //affectation
 affectation : ID AFF exp;
@@ -35,6 +35,10 @@ opermd : MUL | DIV ;
 instif : IF '(' condition ')' THEN '{' instructions ('}'ELSE '{' instructions)? '}';
 condition : exp op exp ;
 op : SUP | INF | SUPE | INFE | DIF | EQ;
+
+// do while
+
+instwhile : DO '{' instructions '}' WHILE '(' condition ')';
 
 //lire et ecrire
 scan :  SCAN '(' variables ')' ;

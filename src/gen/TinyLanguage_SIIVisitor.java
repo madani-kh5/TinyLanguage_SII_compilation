@@ -1,4 +1,4 @@
-// Generated from C:/Users/ASUS VIVOBOOK S14/IdeaProjects/TinyLanguage_SII/src\TinyLanguage_SII.g4 by ANTLR 4.9.1
+// Generated from C:/Users/acer/Desktop/TinyLanguage_SII_compilation/src\TinyLanguage_SII.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -111,6 +111,12 @@ public interface TinyLanguage_SIIVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitOp(TinyLanguage_SIIParser.OpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TinyLanguage_SIIParser#instwhile}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInstwhile(TinyLanguage_SIIParser.InstwhileContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TinyLanguage_SIIParser#scan}.
 	 * @param ctx the parse tree
