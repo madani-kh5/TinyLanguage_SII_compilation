@@ -17,7 +17,7 @@ public class SymbolTable {
 
 
 
-        @Override
+
         public String showVar()
         {
             String dclr = (declare == true) ? "true" : "false";

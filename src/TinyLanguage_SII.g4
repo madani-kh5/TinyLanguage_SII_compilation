@@ -79,7 +79,7 @@ AFF : '=';
 IDPROGRAMME : [A-Z][a-zA-Z0-9_]*;
 ID : [a-zA-Z][a-zA-Z0-9]*;
 INTEGERVAL : '0'|[+-]?[1-9][0-9]*;
-FLOATVAL : '0'|[+-]?[1-9][0-9]*('.'[0-9]*);
+FLOATVAL : [+-]?[1-9][0-9]*('.'[0-9]*);
 STRINGVAL : '"' (~'"'|'\\"')* '"'  ;
 
 COMMENT : '/*' .*? '*/' -> channel(HIDDEN) ;
