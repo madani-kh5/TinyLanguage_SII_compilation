@@ -62,4 +62,22 @@ public class SymbolTable {
     {
         return Table.get(i);
     }
+
+
+
+    public void display() {
+        System.out.println("Table des symboles : ");
+        System.out.println("\n********************************************************");
+        System.out.println("   VAR         |       TYPE    |        DEC  \n");
+
+        for (Element l: Table) {
+            String t=null;
+            if (l.type == 'i') { t = "intCompil"; }
+            else if (l.type == 'f' ) { t = "floatCompil"; }
+            else if (l.type == 's' ) { t= "StringCompil";}
+
+            System.out.printf("   %s              %s            %b  \n",l.name,t,l.declare);
+        }
+        System.out.println("\n********************************************************");
+    }
 }
