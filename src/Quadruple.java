@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 
 public class Quadruple {
-    String[] Quad;
+    String[] Quad=new String[4];
+
     private String op;
     private String op1;
     private String op2;
@@ -16,11 +17,10 @@ public class Quadruple {
     }
 
     public Quadruple(String op, String op1, String op2, String result) {
-        String[] Quad = new String[4];
-        Quad[0] = op;
-        Quad[1] = op1;
-        Quad[2] = op2;
-        Quad[3] = result;
+        this.Quad[0] = op;
+        this.Quad[1] = op1;
+        this.Quad[2] = op2;
+        this.Quad[3] = result;
     }
 
     public String get(int index) {
@@ -46,6 +46,8 @@ public class Quadruple {
             case "=":
                 return AssemblerInstruction.aff(idetiq, temp, op1);
             case "BR":
+            case "BG":
+            case "BL":
             case "BGE":
             case "BLE":
                 return AssemblerInstruction.jump(idetiq, op, op1, op2, temp);
@@ -64,23 +66,22 @@ public class Quadruple {
     }
 
     public static class AssemblerInstruction {
+
         public static String AX = "AX";
         public static String BX = "BX";
+        public static String JL = "JL";
+        public static String JG = "JG";
         public static String JLE = "JLE";
         public static String JGE = "JGE";
         public static String JMP = "JMP";
 
 
-        public static ArrayList<String> op(int idetiq, String op, String op1, String op2, String result) {
+        public static ArrayList<String> op (int idetiq, String op, String op1, String op2, String result) {
             ArrayList<String> assembly = new ArrayList<>();
-
             if (SemanticQuad.etiq.contains(idetiq)) {
                 assembly.add("etiq" + idetiq + ": ");
             }
-
             assembly.add(mov(AX, op1));
-
-
             switch (op) {
                 case "+":
                     assembly.add(add(AX, op2));
@@ -102,12 +103,9 @@ public class Quadruple {
         public static ArrayList<String> aff(int idetiq, String target, String source) {
             ArrayList<String> assembly = new ArrayList<>();
             if(SemanticQuad.etiq.contains(idetiq)) {
-                assembly.add("etiq" + idetiq + ": ");
+                assembly.add("etiq" + idetiq + " : ");
             }
-
             assembly.add(mov(AX, source));
-
-
             assembly.add(mov(target, AX));
             return assembly;
         }
@@ -120,6 +118,26 @@ public class Quadruple {
                         assembly.add("etiq" + idetiq + ": ");
                     }
                     assembly.add(jmp(JMP, op1));
+                    break;
+                case "BL":
+                    if (SemanticQuad.etiq.contains(idetiq)) {
+                        assembly.add("etiq" + idetiq + ": ");
+                    }
+                    assembly.add(mov(AX, op1));
+                    assembly.add(mov(BX, op2));
+                    assembly.add(cmp(op1, op2));
+                    assembly.add(jmp(JL, result));
+
+                    break;
+
+                case "BG":
+                    if (SemanticQuad.etiq.contains(idetiq)) {
+                        assembly.add("etiq" + idetiq + ": ");
+                    }
+                    assembly.add(mov(AX, op1));
+                    assembly.add(mov(BX, op2));
+                    assembly.add(cmp(op1, op2));
+                    assembly.add(jmp(JG, result));
 
                     break;
 

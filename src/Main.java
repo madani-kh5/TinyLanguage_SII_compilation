@@ -15,7 +15,7 @@ import java.util.LinkedList;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        CharStream CS = (CharStream) CharStreams.fromFileName("./exemple");
+        CharStream CS = (CharStream) CharStreams.fromFileName("./program.tiny");
         TinyLanguage_SIILexer Lex = new TinyLanguage_SIILexer(CS);
         CommonTokenStream CTS = new CommonTokenStream(Lex);
         TinyLanguage_SIIParser parser = new TinyLanguage_SIIParser(CTS);
@@ -23,10 +23,17 @@ public class Main {
         TinyLanguage_SIIParser.Start_ruleContext start = parser.start_rule();
         SemanticTinyLanguage_SI listner = new SemanticTinyLanguage_SI();
         ParseTreeWalker walker = new ParseTreeWalker();
+        SemanticQuad seq= new SemanticQuad();
         walker.walk(listner,start);
+        walker.walk(seq,start);
 
-        listner.getTable().display();
 
-
+        if (listner.getTableE().isEmpty())
+        {   listner.getTable().display();
+            seq.getQuads().display();
+            seq.getQuads().saveAssembly("assembleur");
+        }
     }
 }
+
+

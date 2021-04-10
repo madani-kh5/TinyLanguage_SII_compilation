@@ -1,0 +1,8 @@
+compil Programme () {
+intCompil x,x;
+floatCompil y;
+start
+x=3.0;
+x=y;
+x=4/0;
+}

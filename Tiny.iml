@@ -10,74 +10,23 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/antlr-intellij-plugin-v4/lib/ST4-4.3.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/antlr-intellij-plugin-v4/lib/ST4-4.3.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/antlr-intellij-plugin-v4/lib/org.abego.treelayout.core-1.0.3.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/antlr-intellij-plugin-v4/lib/javax.json-1.0.4.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/antlr-intellij-plugin-v4/lib/intellij-plugin-v4-1.16.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/antlr-intellij-plugin-v4/lib/antlr4-runtime-4.9.1.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/antlr-intellij-plugin-v4/lib/antlr4-intellij-adaptor-0.1.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/antlr-intellij-plugin-v4/lib/antlr4-4.9.1.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/antlr-intellij-plugin-v4/lib/antlr-runtime-3.5.2.jar!/" />
+          <root url="file://$MODULE_DIR$" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/gen" />
+          <root url="file://$MODULE_DIR$/src" />
+        </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/antlr-intellij-plugin-v4/lib/org.abego.treelayout.core-1.0.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/antlr-intellij-plugin-v4/lib/javax.json-1.0.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/antlr-intellij-plugin-v4/lib/intellij-plugin-v4-1.16.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/antlr-intellij-plugin-v4/lib/antlr4-intellij-adaptor-0.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/antlr-intellij-plugin-v4/lib/antlr4-runtime-4.9.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/antlr-intellij-plugin-v4/lib/antlr4-4.9.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/antlr-intellij-plugin-v4/lib/antlr-runtime-3.5.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="ST4-4.3" level="project" />
   </component>
 </module>

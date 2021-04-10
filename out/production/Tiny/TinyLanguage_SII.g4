@@ -36,7 +36,6 @@ instif : IF '(' condition ')' THEN '{' instructions ('}' instelse '{' instructio
 instelse: ELSE;
 condition : exp op exp ;
 op : SUP | INF | SUPE | INFE | DIF | EQ;
-
 // do while
 
 instwhile : DO '{' instructions '}' WHILE '(' condition ')';

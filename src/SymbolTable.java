@@ -6,23 +6,15 @@ public class SymbolTable {
         String name;
         boolean declare; // false:undeclared , true :declared
         char type; // i:intCompil , f:floatCompil  , s:StringCompil
-        int size; //size;
+        String value; //value;
 
-        public Element(String name, boolean declare, char type, int size) {
+        public Element(String name, boolean declare, char type, String value) {
             this.name = name;
             this.declare = declare;
             this.type = type;
-            this.size = size;
+            this.value = value;
         }
 
-
-
-
-        public String showVar()
-        {
-            String dclr = (declare == true) ? "true" : "false";
-            return "| variable: " + name + " | type: " + (  (type=='i' ? "intCompil" : (type=='f' ? "floatCompil" : "StringCompil" ) )) + " | status: " + dclr +"|";
-        }
     }
 
 
@@ -53,22 +45,28 @@ public class SymbolTable {
         Table.remove(e);
     }
 
-    public int getSize()
-    {
-        return Table.size();
-    }
 
     public Element getElement(int i)
     {
         return Table.get(i);
     }
 
+    public void SetValue (String name,String value )
+    {
+        getElement(name).value = value ;
+    }
+
+    public String GetValue (String name) {
+      return   getElement(name).value;
+    }
+
+
 
 
     public void display() {
         System.out.println("Table des symboles : ");
         System.out.println("\n********************************************************");
-        System.out.println("   VAR         |       TYPE    |        DEC  \n");
+        System.out.println("   VAR         |       TYPE    |        DEC     |     VALEUR    \n");
 
         for (Element l: Table) {
             String t=null;
@@ -76,7 +74,7 @@ public class SymbolTable {
             else if (l.type == 'f' ) { t = "floatCompil"; }
             else if (l.type == 's' ) { t= "StringCompil";}
 
-            System.out.printf("   %s              %s            %b  \n",l.name,t,l.declare);
+            System.out.printf("   %s              %s            %b          %s  \n",l.name,t,l.declare,l.value);
         }
         System.out.println("\n********************************************************");
     }

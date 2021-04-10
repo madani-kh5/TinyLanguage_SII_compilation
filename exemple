@@ -1,7 +1,0 @@
-compil Proj () {
-intCompil x;
-floatCompil y;
-StringCompil z;
-start
-z = 4;
-}

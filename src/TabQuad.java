@@ -28,9 +28,9 @@ public class TabQuad {
         return assembly;
     }
 
-//    public void saveAssembly(String filename) throws IOException {
-//        Files.write(Paths.get(filename), toAssembly());
-//    }
+    public void saveAssembly(String filename) throws IOException {
+        Files.write(Paths.get(filename), toAssembly());
+    }
 
 
     public Quadruple getQuad(int index)
@@ -47,11 +47,11 @@ public class TabQuad {
     {
         addQuad("Final","Quad","","");
 
-        System.out.println("Our Quadruples : ");
+        System.out.println("Les Quadruples : ");
         System.out.println("**************************************************************");
         for (int i = 0; i < size(); i++) {
             System.out.println(i + ": " + getQuad(i).toString());
         }
-        System.out.println("**************************************************************");
+        System.out.println("************************************************************** \n \n");
     }
 }

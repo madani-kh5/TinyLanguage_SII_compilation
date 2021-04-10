@@ -1,8 +1,11 @@
+import org.antlr.v4.codegen.model.decl.TokenTypeDecl;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.lang.reflect.Field;
+
+import static java.lang.Integer.parseInt;
 
 class SemanticTinyLanguage_SI extends  TinyLanguage_SIIBaseListener {
 
@@ -16,19 +19,20 @@ class SemanticTinyLanguage_SI extends  TinyLanguage_SIIBaseListener {
     private LinkedList<String> TableErrors = new LinkedList<>();
     private HashMap<ParserRuleContext, Character> types = new HashMap<>();
 
-//    public SemanticTinyLanguage_SI(LinkedList<String> errors) {
-//        this.TableErrors = errors;
-//    }
 
     public SymbolTable getTable() {
         return table;
     }
+    public LinkedList<String>  getTableE() {
+        return TableErrors;
+    }
+
 
     @Override public void exitStart_rule(TinyLanguage_SIIParser.Start_ruleContext ctx){
 
          //on verifie si il n'y a pas d'erreurs
          if(TableErrors.size() == 0){
-             System.out.println("programme compiler sans erreurs");
+             System.out.println("programme compile sans erreurs");
          }
          //sinon on affiche les erreurs de la TableErrors
          else{
@@ -37,14 +41,45 @@ class SemanticTinyLanguage_SI extends  TinyLanguage_SIIBaseListener {
     }
 
     @Override public void exitAffectation(TinyLanguage_SIIParser.AffectationContext ctx) {
-//        char typeExp = getCtxTypes(ctx.exp());
-//        char typeID = table.getElement(ctx.ID().getText()).type;
-        if(!table.ExistElement(ctx.ID().getText()))
-        {    table.addElement(new SymbolTable.Element(ctx.ID().getText(),Undeclared,'e',1));
-            TableErrors.add(Position(ctx.ID())+"variable " + ctx.ID().getText() + " est non declaree");
+        if (!table.ExistElement(ctx.ID().getText())) {
+            table.addElement(new SymbolTable.Element(ctx.ID().getText(), Undeclared, 'e', null));
+            TableErrors.add(Position(ctx.ID()) + "variable " + ctx.ID().getText() + " est non declaree");
         }
-        if(!CompatibleTypes( getCtxTypes(ctx.exp()) , table.getElement(ctx.ID().getText()).type ))
-            TableErrors.add ( Position(ctx.ID()) + "incompatible types in affectation " + ctx.getText() + " : " + table.getElement(ctx.ID().getText()).type + " avec " + getCtxTypes(ctx.exp()));
+        if (!CompatibleTypes(getCtxTypes(ctx.exp()), table.getElement(ctx.ID().getText()).type))
+            TableErrors.add(Position(ctx.ID()) + "types incompatibles dans l'affectation " + ctx.getText() + " : " + table.getElement(ctx.ID().getText()).type + " avec " + getCtxTypes(ctx.exp()));
+
+        if(table.ExistElement(ctx.ID().getText()) && CompatibleTypes(getCtxTypes(ctx.exp()), table.getElement(ctx.ID().getText()).type) )
+        {  if(ctx.exp().exp2().exp3().value() != null && ctx.exp().exp2().opermd() == null && ctx.exp().operpm() == null )
+            {table.SetValue(ctx.ID().getText() , ctx.exp().getText());}
+
+            else if (ctx.exp().exp2().exp3().ID() != null && ctx.exp().exp2().opermd() == null && ctx.exp().operpm() == null )
+            {
+                table.SetValue(ctx.ID().getText() , table.GetValue(ctx.exp().getText()));
+            }
+            else if (ctx.exp().operpm() != null)
+           {    if (ctx.exp().exp2().exp3().ID() == null && ctx.exp().exp2().exp3().value() != null )
+                 { if (ctx.exp().exp2().exp3().value().FLOATVAL() != null) {
+                     var op1 = 0.0;
+                     var op2 = 0.0;
+                     op1 = Float.parseFloat(ctx.exp().exp().exp2().exp3().value().getText());
+                     op2 = Float.parseFloat(ctx.exp().exp2().exp3().value().getText());
+                     if (ctx.exp().operpm().PLUS() != null) {
+                         table.SetValue(ctx.ID().getText(), String.valueOf(op1 + op2));
+                     }
+                  }
+                     if (ctx.exp().exp2().exp3().value().INTEGERVAL() != null) {
+                         var op1 = 0;
+                         var op2 = 0;
+                         op1 = parseInt(ctx.exp().exp().exp2().exp3().value().getText());
+                         op2 = parseInt(ctx.exp().exp2().exp3().value().getText());
+                         if (ctx.exp().operpm().PLUS() != null) {
+                             table.SetValue(ctx.ID().getText(), String.valueOf(op1 + op2));
+                         }
+                     }
+
+                 }
+           }
+        }
 
 
         clearTypes();
@@ -52,13 +87,6 @@ class SemanticTinyLanguage_SI extends  TinyLanguage_SIIBaseListener {
 
 
     @Override public void exitExp(TinyLanguage_SIIParser.ExpContext ctx){
-       /* if(!typesSame(table.getElement(ctx.exp().getText()).type,table.getElement(ctx.exp2().getText()).type)){
-            TableErrors.add("la variable " + ctx.exp().getText() + " et la variable "+ ctx.exp2().getText() +
-                    " ne sont pas compatible pour effectuer l'operation");
-        } */
-//        char ExpType = getCtxTypes(ctx.exp());
-//        char Exp2Type = getCtxTypes(ctx.exp2());
-
         if(ctx.exp() == null)
             addCtxTypes(ctx, getCtxTypes(ctx.exp2()) );
         else
@@ -70,16 +98,11 @@ class SemanticTinyLanguage_SI extends  TinyLanguage_SIIBaseListener {
                  addCtxTypes(ctx,'e'); // e : error
                 }
         }
+
         }
 
 
     @Override public void exitExp2(TinyLanguage_SIIParser.Exp2Context ctx){
-       /* if(!typesSame(table.getElement(ctx.exp2().getText()).type,table.getElement(ctx.exp3().getText()).type)){
-            TableErrors.add("la variable " + ctx.exp2().getText() + " et la variable "+ ctx.exp3().getText() +" ne sont pas compatible pour effectuer l'operation");
-        }*/
-
-//        char Exp3Type = getCtxTypes(ctx.exp3());
-//        char Exp2Type = getCtxTypes(ctx.exp2());
 
         if(ctx.exp2() == null)
             addCtxTypes(ctx,getCtxTypes(ctx.exp3()));
@@ -87,15 +110,17 @@ class SemanticTinyLanguage_SI extends  TinyLanguage_SIIBaseListener {
         {
             if(CompatibleTypes( getCtxTypes(ctx.exp2()) , getCtxTypes(ctx.exp3()) )){
                 addCtxTypes(ctx, getCtxTypes(ctx.exp2()) );
+                if (ctx.opermd().getText().equals("/") && ctx.exp3().getText().equals("0"))
+                {
+                    TableErrors.add( Position(ctx.opermd().DIV()) + "Division sur 0");
+                }
             }
             else {
-                addCtxTypes(ctx,'e');// e : error
+                addCtxTypes(ctx,'e');// e : erreur
             }
         }
-
-
-
     }
+
     @Override public void exitExp3(TinyLanguage_SIIParser.Exp3Context ctx){
         if (ctx.ID() != null) {
             if(!table.ExistElement(ctx.ID().getText()))
@@ -128,7 +153,7 @@ class SemanticTinyLanguage_SI extends  TinyLanguage_SIIBaseListener {
            String VariableName = vars.getChild(0).getText();
 
             if (table.ExistElement(VariableName)) { TableErrors.add("Double declaration de :"+ VariableName);}
-            else { table.addElement( new SymbolTable.Element(VariableName,Declared,type,1));}
+            else { table.addElement( new SymbolTable.Element(VariableName,Declared,type, null));}
 
             if(vars.variables() == null)
                 return;
@@ -136,6 +161,10 @@ class SemanticTinyLanguage_SI extends  TinyLanguage_SIIBaseListener {
     }
 
     @Override public void exitCondition(TinyLanguage_SIIParser.ConditionContext ctx) {
+        if (!CompatibleTypes(getCtxTypes(ctx.exp(0)), getCtxTypes(ctx.exp(1))))
+        { TableErrors.add( Position( (TerminalNode) ctx.op().getChild(0)) + "types incompatibles dans la condition "); }
+
+
         clearTypes();
     }
     @Override public void exitValue(TinyLanguage_SIIParser.ValueContext ctx) {
@@ -144,6 +173,7 @@ class SemanticTinyLanguage_SI extends  TinyLanguage_SIIBaseListener {
         else if (ctx.STRINGVAL() !=null ) {addCtxTypes(ctx,StringCompil);}
         else {addCtxTypes(ctx,'e');}
     }
+
 
     private static boolean typesSame(char c1,char c2)
     {
@@ -181,7 +211,7 @@ class SemanticTinyLanguage_SI extends  TinyLanguage_SIIBaseListener {
 
 
     public static String Position(TerminalNode terminalNode) {
-        return "line " + terminalNode.getSymbol().getLine() + ":" + terminalNode.getSymbol().getCharPositionInLine() + " ";
+        return "ligne " + terminalNode.getSymbol().getLine() + ":" + terminalNode.getSymbol().getCharPositionInLine() + " ";
     }
 
 

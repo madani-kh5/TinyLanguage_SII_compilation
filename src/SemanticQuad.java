@@ -3,20 +3,21 @@ import java.util.LinkedList;
 import java.util.Vector;
 
 public class SemanticQuad extends TinyLanguage_SIIBaseListener {
-    private LinkedList<String> stack = new LinkedList<>();
+    private LinkedList<String> pile = new LinkedList<>();
     private TabQuad quads = new TabQuad();
     private int cptTemps = 0;
     public static Vector<Integer> etiq = new Vector<>();
 
     public TabQuad getQuads() {
         return quads;
+
     }
 
 
 
     @Override public void exitAffectation(TinyLanguage_SIIParser.AffectationContext ctx) {
-        String LastInStack = stack.removeLast();
-        quads.addQuad("=",LastInStack,"",ctx.ID().getText());
+        String DP = pile.removeLast();
+        quads.addQuad("=",DP,"",ctx.ID().getText());
     }
 
 
@@ -24,11 +25,11 @@ public class SemanticQuad extends TinyLanguage_SIIBaseListener {
     @Override public void exitExp(TinyLanguage_SIIParser.ExpContext ctx) {
         if(ctx.exp() != null)
         {
-            String SS = stack.removeLast();
-            String SSS = stack.removeLast();
+            String DP = pile.removeLast();
+            String AVDP = pile.removeLast();
             String temp = "Temp"+(++cptTemps);
-            quads.addQuad(ctx.operpm().getText(),SSS,SS,temp);
-            stack.add(temp);
+            quads.addQuad(ctx.operpm().getText(),AVDP,DP,temp);
+            pile.add(temp);
         }
     }
 
@@ -39,10 +40,10 @@ public class SemanticQuad extends TinyLanguage_SIIBaseListener {
     {
         if(ctx.exp2() != null)
         {
-            String SS = stack.removeLast(),SSS = stack.removeLast();
+            String SS = pile.removeLast(),SSS = pile.removeLast();
             String temp = "Temp"+(++cptTemps);
             quads.addQuad(ctx.opermd().getText(),SSS,SS,temp);
-            stack.add(temp);
+            pile.add(temp);
         }
 
     }
@@ -52,7 +53,7 @@ public class SemanticQuad extends TinyLanguage_SIIBaseListener {
     @Override public void exitExp3(TinyLanguage_SIIParser.Exp3Context ctx)
     {
         if(ctx.exp() == null) {
-            stack.add(ctx.getText());
+            pile.add(ctx.getText());
 
         }
 
@@ -63,21 +64,19 @@ public class SemanticQuad extends TinyLanguage_SIIBaseListener {
     int saveCondition ;
     @Override public void exitCondition(TinyLanguage_SIIParser.ConditionContext ctx) {
 
-        String SS = stack.removeLast();
-        String SSS = stack.removeLast();
+        String DP = pile.removeLast();
+        String AVDP = pile.removeLast();
         String ctxOp= ctx.op().getText();
         String op;
-        if (ctxOp.compareTo(">") == 1) {op = "BG" ;}
-        else if (ctxOp.compareTo("<") == 1) {op = "BL" ;}
-        else if (ctxOp.compareTo(">=") == 1) { op = "BGE";   }
-        else if (ctxOp.compareTo("<=") == 1) { op = "BLE"; }
-        else if (ctxOp.compareTo("==") == 1) {  op = "BE";  }
-        else if (ctxOp.compareTo("!=") == 1) {  op = "BNE"; }
+        if (ctx.op().SUP() != null ) {op = "BG" ;}
+        else if (ctx.op().INF() != null) {op = "BL" ;}
+        else if (ctx.op().SUPE() != null) { op = "BGE";   }
+        else if (ctx.op().INFE() != null) { op = "BLE"; }
+        else if (ctx.op().EQ() != null) {  op = "BE";  }
+        else if (ctx.op().DIF() != null) {  op = "BNE"; }
         else { op = "";}
 
-
-
-        saveCondition = quads.addQuad(op,SSS,SS,"");
+        saveCondition = quads.addQuad(op,AVDP,DP,"");
     }
 
 
